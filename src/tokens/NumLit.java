@@ -9,20 +9,20 @@ import core.Token;
 
 public class NumLit extends Token {
 
-	String text;
-	
-	public NumLit(String text){
-		this.text = text;
-	}
-	
-	@Override
-	public void eval(ArrayList<Prim> args) {
-		args.add(0,new Num(text));
-	}
+  String text;
 
-	@Override
-	public boolean canEval(ArrayList<Prim> args) {
-		return true;
-	}
+  public NumLit(String text){
+    this.text = text;
+  }
+
+  @Override
+  public void eval(ArrayList<Prim> args) {
+    args.add(0,new Num(text));
+  }
+
+  @Override
+  public boolean canEval(ArrayList<Prim> args) {
+    return true;
+  }
 
 }
