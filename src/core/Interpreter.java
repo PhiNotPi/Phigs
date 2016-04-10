@@ -13,10 +13,7 @@ public class Interpreter {
         break;
       }
       TokenList prog = Parser.parseString(null, line);
-      ArrayList<Prim> res = prog.eval();
-      for (Prim p : res) {
-        System.out.println(p);
-      }
+      prog.eval();
     }
     keyboard.close();
   }

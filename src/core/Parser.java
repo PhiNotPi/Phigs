@@ -42,6 +42,15 @@ public class Parser {
       case '\\':
         res.shift(new StackSwap());
         break;
+      case '#':
+        res.shift(new StackPop());
+        break;
+      case '[':
+        res.shift(new ListBegin());
+        break;
+      case ']':
+        res.shift(new ListEnd());
+        break;
       default:
         break;
       }
@@ -50,6 +59,7 @@ public class Parser {
       res.shift(new NumLit(numLit));
       numLit = "";
     }
+    res.shift(new StackPrint());
     return res;
   }
 
