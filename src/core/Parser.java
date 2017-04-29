@@ -6,21 +6,27 @@ public class Parser {
 
   public static TokenList parseString(TokenList parent, String s) {
     TokenList res = new TokenList(parent);
+    boolean parsing_number = false;
+    boolean after_dot = false;
     String numLit = "";
-    while (s.length() > 0) {
-      char c = s.charAt(0);
-      s = s.substring(1);
-      Integer intVal = null;
-      try {
-        intVal = Integer.parseInt(Character.toString(c));
-      } catch (Exception e) {
-      }
-      if (c == '.' || intVal != null) {
+    for(int i=0;i<s.length();i++){
+      char c = s.charAt(i);
+      if ('0' <= c && c <= '9') {
+        parsing_number = true;
         numLit += Character.toString(c);
         continue;
       }
-      if (!numLit.equals("")) {
+      if (c == '.') {
+        if (!after_dot){
+          after_dot = true;
+          numLit += ".";
+          continue;
+        }
+      }
+      if (parsing_number) {
         res.shift(new NumLit(numLit));
+        parsing_number = false;
+        after_dot = false;
         numLit = "";
       }
       switch (c) {
@@ -55,8 +61,10 @@ public class Parser {
         break;
       }
     }
-    if (!numLit.equals("")) {
+    if (parsing_number) {
       res.shift(new NumLit(numLit));
+      parsing_number = false;
+      after_dot = false;
       numLit = "";
     }
     res.shift(new StackPrint());
